@@ -14,7 +14,8 @@ jobs:
       - run: yarn install
       - run: yarn build
       - run: npx cap sync
-      # Fix permissions for gradlew
+      # Use official Gradle action to fix wrapper issues and cache
+      - uses: gradle/actions/setup-gradle@v3
       - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
