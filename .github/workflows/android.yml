@@ -8,9 +8,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-      # Force a clean install to fix the native binding issue
+      # Clean up
       - run: rm -rf node_modules package-lock.json
-      - run: npm install
+      # Install with optional dependencies forced
+      - run: npm install --include=optional
+      # Rebuild the specific package causing the issue
+      - run: npm rebuild @tailwindcss/oxide
       - run: npm run build
       - run: npx cap sync
       - run: cd android && ./gradlew assembleDebug
